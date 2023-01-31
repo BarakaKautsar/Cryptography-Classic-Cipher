@@ -7,6 +7,7 @@ def generateKeySting(string,key):
 
 def encrypt(plaintext,key):
     plaintext = plaintext.upper()
+    plaintext = plaintext.replace(" ","")
     key = key.upper()
     ciphertext = []
     keyString = generateKeySting(plaintext,key).upper()
