@@ -1,6 +1,19 @@
 #playfair cipher
 
 import string
+import tkinter as TK
+from tkinter.filedialog import askopenfilename
+
+
+#function to read any file and return the text in it
+def plaintext_file_read(filename):
+    with open(filename, "r") as f:
+        plaintext = f.read()
+    return plaintext
+
+def save_ciphertext(filename, ciphertext):
+    with open(filename, "w") as f:
+        f.write(ciphertext)
 
 def key_matrix_generation(key):
     key = key.upper()
@@ -69,9 +82,7 @@ def diagraph_encryption(diagraph, key_matrix):
             ciphertext = ciphertext + key_matrix[row1][col2] + key_matrix[row2][col1]
     return ciphertext
 
-
-
-plaintext = "Hide the gold in the tree stump"
+plaintext = plaintext_file_read(askopenfilename())
 key_matrix = key_matrix_generation("playfair example")
 ciphertext = diagraph_encryption(diagraph, key_matrix)
 print(ciphertext)
@@ -101,6 +112,8 @@ def diagraph_decryption(ciphertext, key_matrix): #can't handle odd length cipher
 
 decryptedtext = diagraph_decryption(ciphertext, key_matrix)
 print(decryptedtext)
+
+
 
 
 #ciphertext = "BMODZBXDNABEKUDMUIXMMOUVIF"
