@@ -12,3 +12,11 @@ class Keyboard :
         letter = ascii_uppercase[signal]
         return letter
 
+class Plugboard:
+
+    def __init__(self, pairs):
+        self.left = ascii_uppercase
+        self.right = ascii_uppercase
+        for pair in pairs:
+            
+
