@@ -99,8 +99,8 @@ def diagraph_decryption(ciphertext, key_matrix): #can't handle odd length cipher
             plaintext = plaintext + key_matrix[row1][col2] + key_matrix[row2][col1]
     return plaintext
 
-decryptrdtext = diagraph_decryption(ciphertext, key_matrix)
-print(decryptrdtext)
+decryptedtext = diagraph_decryption(ciphertext, key_matrix)
+print(decryptedtext)
 
 
 #ciphertext = "BMODZBXDNABEKUDMUIXMMOUVIF"
