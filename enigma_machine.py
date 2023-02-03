@@ -59,6 +59,12 @@ def decode_letter(letter, rotor1, rotor2, rotor3):
     letter = string.ascii_uppercase[rotor1.index(letter)]
     return letter
 
+def groupbyFive (string): #group of 5 characters
+    string = string.upper()
+    string = string.replace(" ","")
+    string = ' '.join(string[i:i+5] for i in range(0, len(string), 5))
+    return(string)
+
 def main():
     message = input('Enter message: ')
     encoded_message = encode_message(message, rotor1, rotor2, rotor3)
