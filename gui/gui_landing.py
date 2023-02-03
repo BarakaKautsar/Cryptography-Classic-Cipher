@@ -5,7 +5,8 @@
 
 from pathlib import Path
 from tkinter import *
-import gui1
+import gui_vigenere
+import gui_vigenereex_text
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -89,9 +90,9 @@ class Landing(Frame):
 
         def getMethod(method):
             if (method == "Vigenere"):
-                self.master.switch_frame(gui1.Vigenere)
+                self.master.switch_frame(gui_vigenere.Vigenere)
             elif (method == "Vigenere Extended"):
-                pass
+                self.master.switch_frame(gui_vigenereex_text.vigenereExtended)
             elif (method == "Playfair"):
                 pass
             elif (method == "OTP"):

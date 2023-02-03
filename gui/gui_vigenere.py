@@ -6,7 +6,7 @@ from pathlib import Path
 from tkinter import *
 import tkinter.messagebox as tkmb
 import tkinter.filedialog as fd
-import gui
+import gui_landing
 import sys
 
 OUTPUT_PATH = Path(__file__).parent
@@ -24,6 +24,7 @@ class Vigenere(Frame):
 
         #functions
         def encrypt_pressed(plaintext,key):
+            plaintext = plaintext.replace(" ", "")
             if (plaintext.isalpha() == False):
                 tkmb.showinfo("Invalid Input!",  "Please only input letters for the plaintext.")
             elif (key.isalpha() == False):
@@ -43,6 +44,7 @@ class Vigenere(Frame):
                 self.entry_4.insert('1.0', plaintext)  
 
         def decrypt_pressed(cipher,key):
+            cipher = cipher.replace(" ", "")
             if (cipher.isalpha() == False):
                 tkmb.showinfo("Invalid Input!",  "Please only input letters for the cipher.")
             elif (key.isalpha() == False):
@@ -62,7 +64,20 @@ class Vigenere(Frame):
                 if (type == "decryption") and self.hasilPlaintext.cget("text")!="":
                     with open(filename, "w") as file:
                         file.write("".join(self.hasilPlaintext.cget("text")))
-                        tkmb.showinfo("File Saved!",  "File Saved!")                      
+                        tkmb.showinfo("File Saved!",  "File Saved!")
+
+        def groupbyFive (string): #group of 5 characters
+            string = string.upper()
+            string = string.replace(" ","")
+            string = ' '.join(string[i:i+5] for i in range(0, len(string), 5))
+            return(string)
+
+        def group_pressed(type):
+            if (type == "encryption") and (self.hasilCipher.cget("text")!=""):
+                self.hasilCipher["text"]= groupbyFive(self.hasilCipher.cget("text"))
+            if (type == "decryption") and self.hasilPlaintext.cget("text")!="":
+                self.hasilPlaintext["text"]= groupbyFive(self.hasilPlaintext.cget("text"))
+
 
         #tkinter elements
         self.canvas = Canvas(
@@ -207,6 +222,22 @@ class Vigenere(Frame):
             width=322.1753444671631,
             height=31.427852630615234
         )
+
+        self.button_image = PhotoImage(
+            file=relative_to_assets("Union.png"))
+        self.button_bagi = Button(
+            image=self.button_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: group_pressed("encryption"),
+            relief="flat"
+        )
+        self.button_bagi.place(
+            x=380,
+            y=322.9999694824219,
+            width=14.877685546875,
+            height=14.87823486328125
+        )       
 
         self.button_image_2 = PhotoImage(
             file=relative_to_assets("button_2.png"))
@@ -353,6 +384,20 @@ class Vigenere(Frame):
             height=15.231903076171875
         )    
 
+        self.button_bagi1 = Button(
+            image=self.button_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: group_pressed("decryption"),
+            relief="flat"
+        )
+        self.button_bagi1.place(
+            x=380,
+            y=622.0380859375,
+            width=14.877685546875,
+            height=14.87823486328125
+        )     
+
         self.button_image_5 = PhotoImage(
             file=relative_to_assets("button_5.png"))
         self.button_5 = Button(
@@ -400,7 +445,7 @@ class Vigenere(Frame):
             image=self.button_image_7,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.master.switch_frame(gui.Landing),
+            command=lambda: self.master.switch_frame(gui_landing.Landing),
             relief="flat"
         )
         self.button_7.place(
