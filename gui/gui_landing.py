@@ -78,7 +78,7 @@ class Landing(Frame):
             width=118.72650146484375,
             height=37.462249755859375
         )
-        options = ["Vigenere","Vigenere Extended","PlayFair","OTP","Enigma"]
+        options = ["Vigenere","Vigenere Extended - Text","Vigenere Extended - File","PlayFair","OTP","Enigma"]
         variable = StringVar(master)
         variable.set(options[0])
 
@@ -93,7 +93,7 @@ class Landing(Frame):
             if (method == "Vigenere"):
                 self.master.switch_frame(gui_vigenere.Vigenere)
             elif (method == "Vigenere Extended"):
-                self.master.switch_frame(gui_vigenereex_text.vigenereExtended)
+                self.master.switch_frame(gui_vigenereex_text.vigenere_Extended)
             elif (method == "Playfair"):
                 self.master.switch_frame(gui_playfair.playfair)
             elif (method == "OTP"):
