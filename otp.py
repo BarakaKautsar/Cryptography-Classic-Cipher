@@ -1,5 +1,7 @@
 #one time pad key generated from text file with the key as long as the plaintext
 import random
+import tkinter.filedialog as fd
+import tkinter.messagebox as tkmb
 
 def groupbyFive (string): #group of 5 characters
     string = string.upper()
@@ -7,7 +9,13 @@ def groupbyFive (string): #group of 5 characters
     string = ' '.join(string[i:i+5] for i in range(0, len(string), 5))
     return(string)
 
-
+def save_pressed(key):
+    filename = ""
+    if filename == "":
+        filename = fd.asksaveasfilename(defaultextension=".txt")
+    with open(filename, "w") as file:
+        file.write("".join(key))
+        tkmb.showinfo("File Saved!",  "File Saved!")
 
 def uploadKey(keyFile):
     key = open(keyFile,"r")
@@ -34,6 +42,8 @@ def encrypt(plaintext,key):
     plaintext = plaintext.upper()
     plaintext = plaintext.replace(" ","")
     key = key.upper()
+    key = generateKeySting(plaintext,key)
+    save_pressed(key)
     ciphertext = []
     for i in range (len(plaintext)):
         x = ((ord(plaintext[i])+ord(key[i])) % 26) + ord("A")
@@ -62,5 +72,5 @@ def main():
     plaintext = decrypt(ciphertext,generatedKeyString)
     print(plaintext)
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+    #main()

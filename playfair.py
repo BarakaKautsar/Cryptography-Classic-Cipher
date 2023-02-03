@@ -56,11 +56,11 @@ def diagraph_generation(plaintext):
     diagraph = [[[0 for i in range (ceiling_division(len(plaintext),2))] for j in range(2)]]
     
     
-    for i in range(0, len(plaintext), 2):
+    for i in range(0, len(plaintext)-1, 2):
         if plaintext[i] == plaintext[i+1]:
             plaintext = plaintext[:i+1] + "X" + plaintext[i+1:]
 
-    diagraph = [[plaintext[i],plaintext[i+1]] for i in range(0,len(plaintext),2)]
+    diagraph = [[plaintext[i],plaintext[i+1]] for i in range(0,len(plaintext)-1,2)]
     return diagraph
 
 diagraph = diagraph_generation("Hide the gold in the tree stump")
@@ -89,13 +89,21 @@ def diagraph_encryption(diagraph, key_matrix):
             ciphertext = ciphertext + key_matrix[row1][col2] + key_matrix[row2][col1]
     return ciphertext
 
-plaintext = plaintext_file_read(askopenfilename())
-key_matrix = key_matrix_generation("playfair example")
-ciphertext = diagraph_encryption(diagraph, key_matrix)
-print(ciphertext)
+#plaintext = plaintext_file_read(askopenfilename())
+#key_matrix = key_matrix_generation("playfair example")
+#ciphertext = diagraph_encryption(diagraph, key_matrix)
+#print(ciphertext)
 
-def diagraph_decryption(ciphertext, key_matrix): #can't handle odd length ciphertext
+def playfair_encryption(plaintext, key):
+    key_matrix = key_matrix_generation(key)
+    diagraph = diagraph_generation(plaintext)
+    ciphertext = diagraph_encryption(diagraph, key_matrix)
+    return ciphertext
+
+
+def playfair_decryption(ciphertext, key_matrix): #can't handle odd length ciphertext
     plaintext = ""
+    key_matrix = key_matrix_generation(key_matrix)
     for i in range(0, len(ciphertext), 2):
         row1 = 0
         col1 = 0
@@ -117,8 +125,10 @@ def diagraph_decryption(ciphertext, key_matrix): #can't handle odd length cipher
             plaintext = plaintext + key_matrix[row1][col2] + key_matrix[row2][col1]
     return plaintext
 
-decryptedtext = diagraph_decryption(ciphertext, key_matrix)
-print(decryptedtext)
+
+
+#decryptedtext = diagraph_decryption(ciphertext, key_matrix)
+#print(decryptedtext)
 
 
 
@@ -128,5 +138,14 @@ print(decryptedtext)
 #plaintext = playfair_decryption(ciphertext, key_matrix)
 #print(plaintext)
 
-
+def main():
+    plaintext = (input("Enter plaintext file: "))
+    key = input("Enter key: ")
+    ciphertext = playfair_encryption(plaintext, key)
+    ciphertext = groupbyFive(ciphertext)
+    print(ciphertext)
+    save_ciphertext("ciphertext.txt", ciphertext)
+    key_matrix = key_matrix_generation(key)
+    plaintext = playfair_decryption(ciphertext, key_matrix)
+    print(plaintext)
 

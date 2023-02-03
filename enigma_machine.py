@@ -2,7 +2,8 @@
 
 import string
 
-def encode_letter(letter, rotor1, rotor2, rotor3):
+def encode_letter(letter):
+    rotor1, rotor2, rotor3, reflector = init_Rotor()
     # Step 1: pass through first three rotor
     letter = rotor1[string.ascii_uppercase.index(letter)]
     letter = rotor2[string.ascii_uppercase.index(letter)]
@@ -15,7 +16,8 @@ def encode_letter(letter, rotor1, rotor2, rotor3):
     letter = string.ascii_uppercase[rotor1.index(letter)]
     return letter
 
-def encode_message(message, rotor1, rotor2, rotor3):
+def encode_message(message):
+    rotor1, rotor2, rotor3, reflector = init_Rotor()
     message = message.upper()
     encoded_message = ''
     for letter in message:
@@ -26,13 +28,18 @@ def encode_message(message, rotor1, rotor2, rotor3):
     return encoded_message
 
 # Define the rotors and reflector
-rotor1 = 'EKMFLGDQVZNTOWYHXUSPAIBRCJ'
-rotor2 = 'AJDKSIRUXBLHWTMCQGZNPYFVOE'
-rotor3 = 'BDFHJLCPRTXVZNYEIWGAKMUSQO'
-reflector = 'YRUHQSLDPXNGOKMIEBFZCWVJAT'
+
+def init_Rotor():
+    rotor1 = 'EKMFLGDQVZNTOWYHXUSPAIBRCJ'
+    rotor2 = 'AJDKSIRUXBLHWTMCQGZNPYFVOE'
+    rotor3 = 'BDFHJLCPRTXVZNYEIWGAKMUSQO'
+    reflector = 'YRUHQSLDPXNGOKMIEBFZCWVJAT'
+    return rotor1, rotor2, rotor3, reflector
 
 
-def decode_message (message, rotor1, rotor2, rotor3):
+
+def decode_message (message):
+    rotor1, rotor2, rotor3, reflector = init_Rotor()
     message = message.upper()
     decoded_message = ''
     for letter in message:
@@ -42,7 +49,8 @@ def decode_message (message, rotor1, rotor2, rotor3):
             decoded_message += letter
     return decoded_message
 
-def decode_letter(letter, rotor1, rotor2, rotor3):
+def decode_letter(letter):
+    rotor1, rotor2, rotor3, reflector = init_Rotor()
     # Step 1: pass through first rotor
     letter = rotor1[string.ascii_uppercase.index(letter)]
     # Step 2: pass through second rotor

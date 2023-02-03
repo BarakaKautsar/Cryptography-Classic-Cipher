@@ -13,12 +13,12 @@ OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"../assets/frame1")
 
 sys.path.append("../Kripto_1")
-import vigenereExtended
+import otp
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
-class vigenereExtended(Frame):
+class OTP(Frame):
     def __init__(self, master): 
         Frame.__init__(self, master, width = 526, height = 687)
 
@@ -30,7 +30,7 @@ class vigenereExtended(Frame):
             elif (key.isalpha() == False):
                 tkmb.showinfo("Invalid Input!",  "Please only input letters for the key.")
             else:
-                self.hasilCipher["text"]= vigenereExtended.encrypt(plaintext,key)
+                self.hasilCipher["text"]= otp.encrypt(plaintext,key)
 
         def upload_pressed(type):
             filetypes = [('text files', '*.txt')]
@@ -42,6 +42,10 @@ class vigenereExtended(Frame):
                 self.entry_1.insert('1.0', plaintext)
             if (type == "decrypt"):
                 self.entry_4.insert('1.0', plaintext)  
+            if (type == "key_encypt"):
+                self.entry_2.insert('1.0', plaintext)
+            if (type == "key_decrypt"):
+                self.entry_5.insert('1.0', plaintext)
 
         def decrypt_pressed(cipher,key):
             cipher = cipher.replace(" ", "")
@@ -50,7 +54,7 @@ class vigenereExtended(Frame):
             elif (key.isalpha() == False):
                 tkmb.showinfo("Invalid Input!",  "Please only input letters for the key.")
             else:
-                self.hasilPlaintext["text"]= vigenereExtended.decrypt(cipher,key)             
+                self.hasilPlaintext["text"]= otp.decrypt(cipher,key)             
 
         def save_pressed(type):
             filename = ""
@@ -94,7 +98,7 @@ class vigenereExtended(Frame):
             263,
             27.08807373046875,
             anchor="n",
-            text="Vigenere Cipher Extended",
+            text="One Time Pad",
             fill="#000000",
             font=("HKGrotesk BoldLegacy", 20 * -1)
         )
@@ -158,7 +162,38 @@ class vigenereExtended(Frame):
             width=118.72650146484375,
             height=37.462249755859375
         )
+
+        self.button_image_uploadkey = PhotoImage(
+            file=relative_to_assets("button_2.png"))
+        self.button_uploadkey = Button(
+            image=self.button_image_uploadkey,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: upload_pressed("key_encrypt"),
+            relief="flat"
+        )
+        self.button_uploadkey.place(
+            x=409.77687072753906,
+            y=207.0,
+            width=14.877685546875,
+            height=14.87823486328125
+        )
         
+        self.button_image_uploadkey_dec = PhotoImage(
+            file=relative_to_assets("button_2.png"))
+        self.button_uploadkey_dec = Button(
+            image=self.button_image_uploadkey_dec,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: upload_pressed("key_encrypt"),
+            relief="flat"
+        )
+        self.button_uploadkey_dec.place(
+            x=409.77687072753906,
+            y=498.0,
+            width=14.877685546875,
+            height=14.87823486328125
+        )
 
         self.entry_image_1 = PhotoImage(
             file=relative_to_assets("entry_1.png"))
@@ -454,3 +489,11 @@ class vigenereExtended(Frame):
             width=91.90768432617188,
             height=29.0
         )
+
+master = Toplevel()
+
+master.geometry("526x687")
+master.configure(bg = "#FFFFFF")
+gui = OTP(master)
+master.resizable(False, False)
+master.mainloop()

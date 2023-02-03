@@ -7,6 +7,7 @@ from pathlib import Path
 from tkinter import *
 import gui_vigenere
 import gui_vigenereex_text
+import gui_playfair
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -94,7 +95,7 @@ class Landing(Frame):
             elif (method == "Vigenere Extended"):
                 self.master.switch_frame(gui_vigenereex_text.vigenereExtended)
             elif (method == "Playfair"):
-                pass
+                self.master.switch_frame(gui_playfair.playfair)
             elif (method == "OTP"):
                 pass
             elif (method == "Enigma"):
