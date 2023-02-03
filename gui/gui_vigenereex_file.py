@@ -10,9 +10,9 @@ import gui_landing
 import sys
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/barakakautsar/Desktop/Kripto_1/assets/frame1")
+ASSETS_PATH = OUTPUT_PATH / Path(r"../assets/frame1")
 
-sys.path.append("/Users/barakakautsar/Desktop/Kripto_1")
+sys.path.append("../Kripto_1")
 import vigenereExtended
 
 def relative_to_assets(path: str) -> Path:
@@ -23,48 +23,79 @@ class vigenere_Extended(Frame):
         Frame.__init__(self, master, width = 526, height = 687)
 
         #functions
-        def encrypt_pressed(plaintext,key):
-            self.hasilCipher["text"]= vigenereExtended.encrypt(plaintext,key)
+        def encrypt_pressed(filename, key):
+            savefile = ""
+            if filename == "insert file":
+                tkmb.showinfo("Error!",  "Please insert file")
+            if key == "":
+                tkmb.showinfo("Error!",  "Please insert key") 
+            else:
+                if savefile =="":
+                    savefile = fd.asksaveasfilename(defaultextension=".txt")
+                if savefile != "":
+                    with open(filename, "rb") as save:
+                        plaintext = save.read().decode("latin-1")
+                        self.hasilCipher["text"]= savefile
+                        cipher = vigenereExtended.encrypt(plaintext,key)
+                        with open(savefile, "wb") as file:
+                            file.write(cipher.encode('latin-1'))
+                        tkmb.showinfo("File Saved!",  "File Saved!") 
+
 
         def upload_pressed(type):
-            filetypes = [('text files', '*.txt')]
-            f = fd.askopenfile(filetypes=filetypes)
-            plaintext = ""
-            for line in f.readlines():
-                plaintext += line.strip() + ""
             if (type =="encrypt"):
-                self.entry_1.insert('1.0', plaintext)
+                filename = fd.askopenfilename()
+                self.entry_1["text"] = filename
             if (type == "decrypt"):
-                self.entry_4.insert('1.0', plaintext)  
+                filetypes = [('text files', '*.txt'),('any files','*')]
+                filename = fd.askopenfilename(filetypes=filetypes)
+                self.entry_4["text"] = filename  
 
-        def decrypt_pressed(cipher,key):
-            self.hasilPlaintext["text"]= vigenereExtended.decrypt(cipher,key)             
+        def decrypt_pressed(filename,key):
+            savefile = ""
+            if filename == "insert cipher file":
+                tkmb.showinfo("Error!",  "Please insert file")
+            if key == "":
+                tkmb.showinfo("Error!",  "Please insert key")
+            else:
+                if savefile =="":
+                    savefile = fd.asksaveasfilename()
+                if savefile != "":
+                    print(filename)
+                    print(key)
+                    with open(filename, "rb") as save:
+                        plaintext = save.read().decode("latin-1")
+                        self.hasilPlaintext["text"]= savefile
+                        cipher = vigenereExtended.decrypt(plaintext,key)
+                        with open(savefile, "wb") as file:
+                            file.write(cipher.encode('latin-1'))
+                        tkmb.showinfo("File Saved!",  "File Saved!")              
 
-        def save_pressed(type):
-            filename = ""
-            if filename == "":
-                filename = fd.asksaveasfilename(defaultextension=".txt")
-            if filename != "":
-                if (type == "encryption") and (self.hasilCipher.cget("text")!=""):
-                    with open(filename, "w") as file:
-                        file.write("".join(self.hasilCipher.cget("text")))
-                        tkmb.showinfo("File Saved!",  "File Saved!")
-                if (type == "decryption") and self.hasilPlaintext.cget("text")!="":
-                    with open(filename, "w") as file:
-                        file.write("".join(self.hasilPlaintext.cget("text")))
-                        tkmb.showinfo("File Saved!",  "File Saved!")
+        # def save_pressed(type, cipher):
+        #     filename = ""
+        #     if filename == "":
+        #         filename = fd.asksaveasfilename(defaultextension=".txt")
+        #     if filename != "":
+        #         if (type == "encryption"):
+        #             with open(filename, "wb") as file:
+        #                 file.write("".join(self.hasilCipher.cget("text")))
+        #                 tkmb.showinfo("File Saved!",  "File Saved!")
+        #         if (type == "decryption") and self.hasilPlaintext.cget("text")!="":
+        #             with open(filename, "w") as file:
+        #                 file.write("".join(self.hasilPlaintext.cget("text")))
+        #                 tkmb.showinfo("File Saved!",  "File Saved!")
 
-        def groupbyFive (string): #group of 5 characters
-            string = string.upper()
-            string = string.replace(" ","")
-            string = ' '.join(string[i:i+5] for i in range(0, len(string), 5))
-            return(string)
+        # def groupbyFive (string): #group of 5 characters
+        #     string = string.upper()
+        #     string = string.replace(" ","")
+        #     string = ' '.join(string[i:i+5] for i in range(0, len(string), 5))
+        #     return(string)
 
-        def group_pressed(type):
-            if (type == "encryption") and (self.hasilCipher.cget("text")!=""):
-                self.hasilCipher["text"]= groupbyFive(self.hasilCipher.cget("text"))
-            if (type == "decryption") and self.hasilPlaintext.cget("text")!="":
-                self.hasilPlaintext["text"]= groupbyFive(self.hasilPlaintext.cget("text"))
+        # def group_pressed(type):
+        #     if (type == "encryption") and (self.hasilCipher.cget("text")!=""):
+        #         self.hasilCipher["text"]= groupbyFive(self.hasilCipher.cget("text"))
+        #     if (type == "decryption") and self.hasilPlaintext.cget("text")!="":
+        #         self.hasilPlaintext["text"]= groupbyFive(self.hasilPlaintext.cget("text"))
 
 
         #tkinter elements
@@ -100,7 +131,7 @@ class vigenere_Extended(Frame):
             103.74162292480469,
             116.99749755859375,
             anchor="nw",
-            text="Plaintext",
+            text="File",
             fill="#000000",
             font=("HKGrotesk Regular", 11 * -1)
         )
@@ -137,7 +168,7 @@ class vigenere_Extended(Frame):
             image=self.button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: encrypt_pressed(self.entry_1.get("1.0",END).strip(),self.entry_2.get("1.0",END).strip()),
+            command=lambda: encrypt_pressed(self.entry_1.cget("text"),self.entry_2.get("1.0",END).strip()),
             relief="flat"
         )
         self.button_1.place(
@@ -155,8 +186,8 @@ class vigenere_Extended(Frame):
             152.1543731689453,
             image=self.entry_image_1
         )
-        self.entry_1 = Text(
-            font=("HKGrotesk Regular", 11 * -1),
+        self.entry_1 = Label(
+            text="insert file",
             bd=0,
             bg="#D9D9D9",
             fg="#000716",
@@ -274,7 +305,7 @@ class vigenere_Extended(Frame):
             103.74162292480469,
             595.3616333007812,
             anchor="nw",
-            text="Plaintext",
+            text="Decrypted File",
             fill="#000000",
             font=("HKGrotesk Regular", 11 * -1)
         )
@@ -285,7 +316,7 @@ class vigenere_Extended(Frame):
             image=self.button_image_3,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda:decrypt_pressed(self.entry_4.get("1.0",END).strip(),self.entry_5.get("1.0",END).strip()),
+            command=lambda:decrypt_pressed(self.entry_4.cget("text"),self.entry_5.get("1.0",END).strip()),
             relief="flat"
         )
         self.button_decrypt.place(
@@ -302,7 +333,8 @@ class vigenere_Extended(Frame):
             450.6996765136719,
             image=self.entry_image_4
         )
-        self.entry_4 = Text(
+        self.entry_4 =Label(
+            text="insert cipher file",
             bd=0,
             bg="#D9D9D9",
             fg="#000716",
@@ -356,21 +388,21 @@ class vigenere_Extended(Frame):
             height=31.4278564453125
         )
 
-        self.button_image_4 = PhotoImage(
-            file=relative_to_assets("button_4.png"))
-        self.button_4 = Button(
-            image=self.button_image_4,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: save_pressed("decryption"),
-            relief="flat"
-        )
-        self.button_4.place(
-            x=409.94410705566406,
-            y=622.0380859375,
-            width=15.23187255859375,
-            height=15.231903076171875
-        )    
+        # self.button_image_4 = PhotoImage(
+        #     file=relative_to_assets("button_4.png"))
+        # self.button_4 = Button(
+        #     image=self.button_image_4,
+        #     borderwidth=0,
+        #     highlightthickness=0,
+        #     command=lambda: save_pressed("decryption"),
+        #     relief="flat"
+        # )
+        # self.button_4.place(
+        #     x=409.94410705566406,
+        #     y=622.0380859375,
+        #     width=15.23187255859375,
+        #     height=15.231903076171875
+        # )    
 
         # self.button_bagi1 = Button(
         #     image=self.button_image,
@@ -386,21 +418,21 @@ class vigenere_Extended(Frame):
         #     height=14.87823486328125
         # )     
 
-        self.button_image_5 = PhotoImage(
-            file=relative_to_assets("button_5.png"))
-        self.button_5 = Button(
-            image=self.button_image_5,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: save_pressed("encryption"),
-            relief="flat"
-        )
-        self.button_5.place(
-            x=409.77674865722656,
-            y=322.9999694824219,
-            width=15.23187255859375,
-            height=15.231905937194824
-        )
+        # self.button_image_5 = PhotoImage(
+        #     file=relative_to_assets("button_5.png"))
+        # self.button_5 = Button(
+        #     image=self.button_image_5,
+        #     borderwidth=0,
+        #     highlightthickness=0,
+        #     command=lambda: save_pressed("encryption"),
+        #     relief="flat"
+        # )
+        # self.button_5.place(
+        #     x=409.77674865722656,
+        #     y=322.9999694824219,
+        #     width=15.23187255859375,
+        #     height=15.231905937194824
+        # )
 
         self.button_image_6 = PhotoImage(
             file=relative_to_assets("button_6.png"))
