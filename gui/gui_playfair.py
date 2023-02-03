@@ -15,10 +15,10 @@ ASSETS_PATH = OUTPUT_PATH / Path(r"../assets/frame1")
 sys.path.append("../Kripto_1")
 import playfair
 
-master = Toplevel()
+# master = Toplevel()
 
-master.geometry("526x687")
-master.configure(bg = "#FFFFFF")
+# master.geometry("526x687")
+# master.configure(bg = "#FFFFFF")
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
@@ -26,7 +26,7 @@ def relative_to_assets(path: str) -> Path:
 class Playfair(Frame):
     def __init__(self, master): 
         Frame.__init__(self, master, width = 526, height = 687)
-
+        print("aa")
         #functions
         def encrypt_pressed(plaintext,key):
             plaintext = plaintext.replace(" ", "")

@@ -8,6 +8,8 @@ from tkinter import *
 import gui_vigenere
 import gui_vigenereex_text
 import gui_playfair
+import gui_vigenereex_file
+import gui_OTP
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -78,7 +80,7 @@ class Landing(Frame):
             width=118.72650146484375,
             height=37.462249755859375
         )
-        options = ["Vigenere","Vigenere Extended - Text","Vigenere Extended - File","PlayFair","OTP","Enigma"]
+        options = ["Vigenere","Vigenere Extended - Text","Vigenere Extended - File","Playfair","OTP","Enigma"]
         variable = StringVar(master)
         variable.set(options[0])
 
@@ -92,11 +94,13 @@ class Landing(Frame):
         def getMethod(method):
             if (method == "Vigenere"):
                 self.master.switch_frame(gui_vigenere.Vigenere)
-            elif (method == "Vigenere Extended"):
+            elif (method == "Vigenere Extended - Text"):
                 self.master.switch_frame(gui_vigenereex_text.vigenere_Extended)
+            elif (method == "Vigenere Extended - File"):
+                self.master.switch_frame(gui_vigenereex_file.vigenere_Extended)
             elif (method == "Playfair"):
-                self.master.switch_frame(gui_playfair.playfair)
+                self.master.switch_frame(gui_playfair.Playfair)
             elif (method == "OTP"):
-                pass
-            elif (method == "Enigma"):
-                pass
+                self.master.switch_frame(gui_OTP.OTP)
+            # elif (method == "Enigma"):
+            #     pass

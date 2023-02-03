@@ -42,7 +42,7 @@ class OTP(Frame):
                 self.entry_1.insert('1.0', plaintext)
             if (type == "decrypt"):
                 self.entry_4.insert('1.0', plaintext)  
-            if (type == "key_encypt"):
+            if (type == "key_encrypt"):
                 self.entry_2.insert('1.0', plaintext)
             if (type == "key_decrypt"):
                 self.entry_5.insert('1.0', plaintext)
@@ -175,22 +175,6 @@ class OTP(Frame):
         self.button_uploadkey.place(
             x=409.77687072753906,
             y=207.0,
-            width=14.877685546875,
-            height=14.87823486328125
-        )
-        
-        self.button_image_uploadkey_dec = PhotoImage(
-            file=relative_to_assets("button_2.png"))
-        self.button_uploadkey_dec = Button(
-            image=self.button_image_uploadkey_dec,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: upload_pressed("key_encrypt"),
-            relief="flat"
-        )
-        self.button_uploadkey_dec.place(
-            x=409.77687072753906,
-            y=498.0,
             width=14.877685546875,
             height=14.87823486328125
         )
@@ -490,10 +474,26 @@ class OTP(Frame):
             height=29.0
         )
 
-master = Toplevel()
+        self.button_image_uploadkey_dec = PhotoImage(
+            file=relative_to_assets("button_2.png"))
+        self.button_uploadkey_dec = Button(
+            image=self.button_image_uploadkey_dec,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: upload_pressed("key_decrypt"),
+            relief="flat"
+        )
+        self.button_uploadkey_dec.place(
+            x=409.77687072753906,
+            y=498.0,
+            width=14.877685546875,
+            height=14.87823486328125
+        )        
 
-master.geometry("526x687")
-master.configure(bg = "#FFFFFF")
-gui = OTP(master)
-master.resizable(False, False)
-master.mainloop()
+# master = Toplevel()
+
+# master.geometry("526x687")
+# master.configure(bg = "#FFFFFF")
+# gui = OTP(master)
+# master.resizable(False, False)
+# master.mainloop()
