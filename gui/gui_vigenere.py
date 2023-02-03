@@ -10,9 +10,9 @@ import gui_landing
 import sys
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/barakakautsar/Desktop/Kripto_1/assets/frame1")
+ASSETS_PATH = OUTPUT_PATH / Path(r"../assets/frame1")
 
-sys.path.append("/Users/barakakautsar/Desktop/Kripto_1")
+sys.path.append("../Kripto_1")
 import vigenere
 
 def relative_to_assets(path: str) -> Path:
