@@ -18,13 +18,19 @@ import vigenereExtended
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
-class vigenere_Extended(Frame):
+class vigenereExtended(Frame):
     def __init__(self, master): 
         Frame.__init__(self, master, width = 526, height = 687)
 
         #functions
         def encrypt_pressed(plaintext,key):
-            self.hasilCipher["text"]= vigenereExtended.encrypt(plaintext,key)
+            plaintext = plaintext.replace(" ", "")
+            if (plaintext.isalpha() == False):
+                tkmb.showinfo("Invalid Input!",  "Please only input letters for the plaintext.")
+            elif (key.isalpha() == False):
+                tkmb.showinfo("Invalid Input!",  "Please only input letters for the key.")
+            else:
+                self.hasilCipher["text"]= vigenereExtended.encrypt(plaintext,key)
 
         def upload_pressed(type):
             filetypes = [('text files', '*.txt')]
@@ -38,7 +44,13 @@ class vigenere_Extended(Frame):
                 self.entry_4.insert('1.0', plaintext)  
 
         def decrypt_pressed(cipher,key):
-            self.hasilPlaintext["text"]= vigenereExtended.decrypt(cipher,key)             
+            cipher = cipher.replace(" ", "")
+            if (cipher.isalpha() == False):
+                tkmb.showinfo("Invalid Input!",  "Please only input letters for the cipher.")
+            elif (key.isalpha() == False):
+                tkmb.showinfo("Invalid Input!",  "Please only input letters for the key.")
+            else:
+                self.hasilPlaintext["text"]= vigenereExtended.decrypt(cipher,key)             
 
         def save_pressed(type):
             filename = ""
@@ -211,21 +223,21 @@ class vigenere_Extended(Frame):
             height=31.427852630615234
         )
 
-        # self.button_image = PhotoImage(
-        #     file=relative_to_assets("Union.png"))
-        # self.button_bagi = Button(
-        #     image=self.button_image,
-        #     borderwidth=0,
-        #     highlightthickness=0,
-        #     command=lambda: group_pressed("encryption"),
-        #     relief="flat"
-        # )
-        # self.button_bagi.place(
-        #     x=380,
-        #     y=322.9999694824219,
-        #     width=14.877685546875,
-        #     height=14.87823486328125
-        # )       
+        self.button_image = PhotoImage(
+            file=relative_to_assets("Union.png"))
+        self.button_bagi = Button(
+            image=self.button_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: group_pressed("encryption"),
+            relief="flat"
+        )
+        self.button_bagi.place(
+            x=380,
+            y=322.9999694824219,
+            width=14.877685546875,
+            height=14.87823486328125
+        )       
 
         self.button_image_2 = PhotoImage(
             file=relative_to_assets("button_2.png"))
@@ -372,19 +384,19 @@ class vigenere_Extended(Frame):
             height=15.231903076171875
         )    
 
-        # self.button_bagi1 = Button(
-        #     image=self.button_image,
-        #     borderwidth=0,
-        #     highlightthickness=0,
-        #     command=lambda: group_pressed("decryption"),
-        #     relief="flat"
-        # )
-        # self.button_bagi1.place(
-        #     x=380,
-        #     y=622.0380859375,
-        #     width=14.877685546875,
-        #     height=14.87823486328125
-        # )     
+        self.button_bagi1 = Button(
+            image=self.button_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: group_pressed("decryption"),
+            relief="flat"
+        )
+        self.button_bagi1.place(
+            x=380,
+            y=622.0380859375,
+            width=14.877685546875,
+            height=14.87823486328125
+        )     
 
         self.button_image_5 = PhotoImage(
             file=relative_to_assets("button_5.png"))
@@ -442,4 +454,3 @@ class vigenere_Extended(Frame):
             width=91.90768432617188,
             height=29.0
         )
-
