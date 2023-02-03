@@ -1,3 +1,8 @@
+def plaintext_file_read_binary(filename):
+    with open(filename, "rb") as f:
+        plaintext = f.read()
+    return plaintext
+
 def generateKeySting(string,key):
     key = list(key)
     keyString = []
@@ -8,6 +13,7 @@ def generateKeySting(string,key):
 def encrypt(plaintext,key):
     ciphertext = []
     keyString = generateKeySting(plaintext,key)
+    plaintext = str(plaintext)
     for i in range (len(plaintext)):
         x = ((ord(plaintext[i])+ord(keyString[i])) % 256) 
         ciphertext.append(chr(x))

@@ -15,6 +15,13 @@ def save_ciphertext(filename, ciphertext):
     with open(filename, "w") as f:
         f.write(ciphertext)
 
+def groupbyFive (string): #group of 5 characters
+    string = string.upper()
+    string = string.replace(" ","")
+    string = ' '.join(string[i:i+5] for i in range(0, len(string), 5))
+    return(string)
+
+
 def key_matrix_generation(key):
     key = key.upper()
     key = key.replace("J", "I")
