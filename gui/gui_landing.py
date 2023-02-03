@@ -10,6 +10,7 @@ import gui_vigenereex_text
 import gui_playfair
 import gui_vigenereex_file
 import gui_OTP
+import gui_enigma
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -102,5 +103,5 @@ class Landing(Frame):
                 self.master.switch_frame(gui_playfair.Playfair)
             elif (method == "OTP"):
                 self.master.switch_frame(gui_OTP.OTP)
-            # elif (method == "Enigma"):
-            #     pass
+            elif (method == "Enigma"):
+                self.master.switch_frame(gui_enigma.Enigma)

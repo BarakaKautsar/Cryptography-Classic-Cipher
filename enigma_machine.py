@@ -1,16 +1,17 @@
 #program to simulate enigma machine
 
 import string
+from collections import deque
 
 def encode_letter(letter):
     rotor1, rotor2, rotor3, reflector = init_Rotor()
-    # Step 1: pass through first three rotor
+    # Step 1: pass through first three rotors
     letter = rotor1[string.ascii_uppercase.index(letter)]
     letter = rotor2[string.ascii_uppercase.index(letter)]
     letter = rotor3[string.ascii_uppercase.index(letter)]
-    # Step 4: Pass through reflector
+    # Step 2: Pass through reflector
     letter = string.ascii_uppercase[reflector.index(letter)]
-    # Step 5: pass through rotors in reverse
+    # Step 3: pass through rotors in reverse
     letter = string.ascii_uppercase[rotor3.index(letter)]
     letter = string.ascii_uppercase[rotor2.index(letter)]
     letter = string.ascii_uppercase[rotor1.index(letter)]
@@ -22,7 +23,7 @@ def encode_message(message):
     encoded_message = ''
     for letter in message:
         if letter in string.ascii_uppercase:
-            encoded_message += encode_letter(letter, rotor1, rotor2, rotor3)
+            encoded_message += encode_letter(letter)
         else:
             encoded_message += letter
     return encoded_message
@@ -33,7 +34,7 @@ def init_Rotor():
     rotor1 = 'EKMFLGDQVZNTOWYHXUSPAIBRCJ'
     rotor2 = 'AJDKSIRUXBLHWTMCQGZNPYFVOE'
     rotor3 = 'BDFHJLCPRTXVZNYEIWGAKMUSQO'
-    reflector = 'YRUHQSLDPXNGOKMIEBFZCWVJAT'
+    reflector = 'YRUHQSLDPXNGOKMIEBFZCWVJAT' # Reflector B
     return rotor1, rotor2, rotor3, reflector
 
 
@@ -44,26 +45,22 @@ def decode_message (message):
     decoded_message = ''
     for letter in message:
         if letter in string.ascii_uppercase:
-            decoded_message += decode_letter(letter, rotor1, rotor2, rotor3)
+            decoded_message += decode_letter(letter)
         else:
             decoded_message += letter
     return decoded_message
 
 def decode_letter(letter):
     rotor1, rotor2, rotor3, reflector = init_Rotor()
-    # Step 1: pass through first rotor
+    # Step 1: pass through first three rotors
     letter = rotor1[string.ascii_uppercase.index(letter)]
-    # Step 2: pass through second rotor
     letter = rotor2[string.ascii_uppercase.index(letter)]
-    # Step 3: pass through third rotor
     letter = rotor3[string.ascii_uppercase.index(letter)]
-    # Step 4: reflect through the reflector
+    # Step 2: reflect through the reflector
     letter = string.ascii_uppercase[reflector.index(letter)]
-    # Step 5: pass back through the third rotor
+    # Step 5: pass back through the rotors in reverse
     letter = string.ascii_uppercase[rotor3.index(letter)]
-    # Step 6: pass back through the second rotor
     letter = string.ascii_uppercase[rotor2.index(letter)]
-    # Step 7: pass back through the first rotor
     letter = string.ascii_uppercase[rotor1.index(letter)]
     return letter
 
@@ -75,9 +72,9 @@ def groupbyFive (string): #group of 5 characters
 
 def main():
     message = input('Enter message: ')
-    encoded_message = encode_message(message, rotor1, rotor2, rotor3)
+    encoded_message = encode_message(message)
     print('Encoded message: ', encoded_message)
-    decoded_message = decode_message(encoded_message, rotor1, rotor2, rotor3)
+    decoded_message = decode_message(encoded_message)
     print('Decoded message: ', decoded_message)
 
 if __name__ == '__main__':

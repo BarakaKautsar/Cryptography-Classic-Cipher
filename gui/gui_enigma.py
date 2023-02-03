@@ -23,12 +23,10 @@ class Enigma(Frame):
         Frame.__init__(self, master, width = 526, height = 687)
 
         #functions
-        def encrypt_pressed(plaintext,key):
+        def encrypt_pressed(plaintext):
             plaintext = plaintext.replace(" ", "")
             if (plaintext.isalpha() == False):
                 tkmb.showinfo("Invalid Input!",  "Please only input letters for the plaintext.")
-            elif (key.isalpha() == False):
-                tkmb.showinfo("Invalid Input!",  "Please only input letters for the key.")
             else:
                 self.hasilCipher["text"]= enigma.encode_message(plaintext)
         def upload_pressed(type):
@@ -42,12 +40,10 @@ class Enigma(Frame):
             if (type == "decrypt"):
                 self.entry_4.insert('1.0', plaintext)  
 
-        def decrypt_pressed(cipher,key):
+        def decrypt_pressed(cipher):
             cipher = cipher.replace(" ", "")
             if (cipher.isalpha() == False):
                 tkmb.showinfo("Invalid Input!",  "Please only input letters for the cipher.")
-            elif (key.isalpha() == False):
-                tkmb.showinfo("Invalid Input!",  "Please only input letters for the key.")
             else:
                 self.hasilPlaintext["text"]= enigma.decode_message(cipher)             
 
@@ -116,14 +112,6 @@ class Enigma(Frame):
             font=("HKGrotesk Regular", 11 * -1)
         )
 
-        self.canvas.create_text(
-            103.74162292480469,
-            180.3951416015625,
-            anchor="nw",
-            text="Key",
-            fill="#000000",
-            font=("HKGrotesk Regular", 11 * -1)
-        )
 
         self.canvas.create_text(
             103.74162292480469,
@@ -148,7 +136,7 @@ class Enigma(Frame):
             image=self.button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: encrypt_pressed(self.entry_1.get("1.0",END).strip(),self.entry_2.get("1.0",END).strip()),
+            command=lambda: encrypt_pressed(self.entry_1.get("1.0",END).strip()),
             relief="flat"
         )
         self.button_1.place(
@@ -180,26 +168,6 @@ class Enigma(Frame):
             height=30
         )
 
-        self.entry_image_2 = PhotoImage(
-            file=relative_to_assets("entry_2.png"))
-        self.entry_bg_2 = self.canvas.create_image(
-            264.82928466796875,
-            215.55203247070312,
-            image=self.entry_image_2
-        )
-        self.entry_2 = Text(
-            font=("HKGrotesk Regular", 11 * -1),
-            bd=0,
-            bg="#D9D9D9",
-            fg="#000716",
-            highlightthickness=0
-        )
-        self.entry_2.place(
-            x=103.7416124343872,
-            y=200,
-            width=300,
-            height=30
-        )
 
         self.entry_image_3 = PhotoImage(
             file=relative_to_assets("entry_3.png"))
@@ -272,14 +240,6 @@ class Enigma(Frame):
             font=("HKGrotesk Regular", 11 * -1)
         )
 
-        self.canvas.create_text(
-            103.74162292480469,
-            478.9404296875,
-            anchor="nw",
-            text="Key",
-            fill="#000000",
-            font=("HKGrotesk Regular", 11 * -1)
-        )
 
         self.canvas.create_text(
             103.74162292480469,
@@ -296,7 +256,7 @@ class Enigma(Frame):
             image=self.button_image_3,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda:decrypt_pressed(self.entry_4.get("1.0",END).strip(),self.entry_5.get("1.0",END).strip()),
+            command=lambda:decrypt_pressed(self.entry_4.get("1.0",END).strip()),
             relief="flat"
         )
         self.button_decrypt.place(
@@ -326,25 +286,7 @@ class Enigma(Frame):
             height=31.4278564453125
         )
 
-        self.entry_image_5 = PhotoImage(
-            file=relative_to_assets("entry_5.png"))
-        self.entry_bg_5 = self.canvas.create_image(
-            264.82928466796875,
-            514.0972900390625,
-            image=self.entry_image_5
-        )
-        self.entry_5 = Text(
-            bd=0,
-            bg="#D9D9D9",
-            fg="#000716",
-            highlightthickness=0
-        )
-        self.entry_5.place(
-            x=103.7416124343872,
-            y=497.38336181640625,
-            width=322.1753444671631,
-            height=31.4278564453125
-        )
+
 
         self.entry_image_6 = PhotoImage(
             file=relative_to_assets("entry_6.png"))
